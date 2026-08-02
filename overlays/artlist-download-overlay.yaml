@@ -1,0 +1,70 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Artlist Enterprise Download API
+  version: 1.0.0
+extends: openapi/artlist-download-openapi-original.yml
+x-generated: '2026-08-02'
+x-method: generated
+x-source: >-
+  Derived from https://developer.artlist.io/openapi/download.yaml plus the documented
+  authentication and rate-limit pages. Captures API Evangelist enhancements without mutating
+  the harvested original.
+actions:
+- target: $.info
+  update:
+    description: >-
+      Mint a downloadable URL for a licensed Artlist asset. Supply the asset type (currently
+      only `song`), the asset id (numeric or UUID) and the format (mp3 or wave); the response
+      carries the URL of the downloadable asset.
+    contact:
+      name: Artlist Enterprise API Support
+      email: enterprise-api-support@artlist.io
+      url: https://developer.artlist.io/welcome
+    x-apievangelist-provider: artlist
+    x-apievangelist-enriched: '2026-08-02'
+- target: $.servers
+  description: >-
+    The harvested document declares a placeholder server (https://host.com) while the path
+    key embeds the absolute URL. Replace with the real base URL.
+  update:
+  - url: https://business.artlist.io/download/v1
+    description: Artlist Enterprise Download API, production
+- target: $.components
+  description: Add the documented OAuth 2.0 client-credentials scheme, absent from the harvested spec.
+  update:
+    securitySchemes:
+      OAuth2ClientCredentials:
+        type: oauth2
+        description: >-
+          OAuth 2.0 client-credentials grant against
+          https://artlist-business-api-prod-cognito.artlist.io/oauth2/token. Send the
+          returned access_token as a Bearer token; tokens expire after 3600 seconds.
+        flows:
+          clientCredentials:
+            tokenUrl: https://artlist-business-api-prod-cognito.artlist.io/oauth2/token
+            scopes: {}
+- target: $
+  description: Apply the OAuth 2.0 requirement to the operation.
+  update:
+    security:
+    - OAuth2ClientCredentials: []
+- target: $.paths['/https://business.artlist.io/download/v1/downloadable/{assetType}/{id}/{format}'].get
+  update:
+    description: >-
+      Resolve a downloadable URL for a licensed asset. This is the licensing-relevant action
+      on the Artlist Enterprise API — it produces a delivery URL for a subscriber's asset,
+      subject to the Artlist license and the client's contracted quota.
+    x-rate-limit: 20 requests per minute (/download surface)
+    x-agentic-note: >-
+      See agentic-access/artlist-agentic-access.yml. Although this is a GET, it is the point
+      at which an asset is delivered, so agent deployments should audit it rather than treat
+      it as a plain read.
+- target: $.tags
+  description: The harvested document tags the operation but declares no tag object.
+  update:
+  - name: downloadable
+    description: Download-URL minting for licensed Artlist assets.
+x-not-applied:
+  note: >-
+    No 4xx responses are added. Artlist publishes a status-code table but no per-operation
+    error mapping; the documented envelope is captured in errors/artlist-problem-types.yml.

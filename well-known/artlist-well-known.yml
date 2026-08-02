@@ -1,0 +1,96 @@
+generated: '2026-08-02'
+method: probed
+source: live GET of /.well-known/* on every Artlist host in apis.yml + the OpenAPI base host
+description: >-
+  Well-known discovery surface across every Artlist host. developer.artlist.io publishes an
+  RFC 9727 API catalog linkset that points at both OpenAPI documents — the only well-known
+  document Artlist serves. The marketing/help hosts (artlist.io, www.artlist.io,
+  help.artlist.io) sit behind an edge WAF that answers 403 to non-browser clients, so their
+  results are recorded as "blocked", not as verified absences.
+hosts:
+- host: https://developer.artlist.io
+  role: developer portal / docs
+  documents:
+  - path: /.well-known/api-catalog
+    status: 200
+    content_type: application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"
+    spec: RFC 9727
+    file: artlist-api-catalog.json
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://business.artlist.io
+  role: API host (Search + Download base URLs)
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://artlist-business-api-prod-cognito.artlist.io
+  role: OAuth 2.0 authorization server (Amazon Cognito)
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 404
+    note: >-
+      Responds with the Cognito error body {"error":"This URL doesn't exist on the
+      authorization server."} — the user-pool domain exposes /oauth2/token (observed 400 on
+      an unauthenticated POST) but no OIDC discovery document.
+  - path: /.well-known/jwks.json
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+- host: https://artlist.io
+  role: marketing site
+  blocked: true
+  note: Edge WAF returns 403 text/html for every path, including /.well-known/*. Not a verified absence.
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/agent-card.json
+    status: 403
+  - path: /.well-known/agent.json
+    status: 403
+- host: https://help.artlist.io
+  role: help center (Zendesk)
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+findings:
+  api_catalog: true
+  security_txt: false
+  openid_configuration: false
+  oauth_authorization_server: false
+  ai_plugin: false
+  agent_card: false
+x-evidence:
+  fetched: '2026-08-02'
+  method: curl GET, follow redirects, 12s timeout

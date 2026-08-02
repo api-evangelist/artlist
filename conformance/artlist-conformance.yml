@@ -1,0 +1,105 @@
+generated: '2026-08-02'
+method: searched
+source: >-
+  https://developer.artlist.io/authentication, https://developer.artlist.io/responses-api,
+  https://developer.artlist.io/general-terms, https://developer.artlist.io/llms.txt,
+  https://developer.artlist.io/.well-known/api-catalog,
+  https://help.artlist.io/hc/en-us/articles/29556821619101-Privacy-at-Artlist, plus the
+  published OpenAPI 3.1 documents
+description: >-
+  Which cross-cutting and industry standards the Artlist Enterprise API conforms to. The
+  standout is RFC 9727 — Artlist serves a real /.well-known/api-catalog linkset pointing at
+  both OpenAPI documents, which fewer than one provider in a thousand does. Against that,
+  errors are a bespoke envelope rather than RFC 9457, and the OpenAPI documents declare no
+  securitySchemes despite a documented OAuth 2.0 flow.
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: >-
+    Two OpenAPI 3.1.0 documents published and served at
+    https://developer.artlist.io/openapi/search.yaml and
+    https://developer.artlist.io/openapi/download.yaml (also .json).
+- id: rfc9727-api-catalog
+  conforms: true
+  evidence: >-
+    GET https://developer.artlist.io/.well-known/api-catalog returns 200 with
+    Content-Type application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727",
+    carrying service-desc and service-doc links for both the Search and Download APIs.
+- id: rfc8615-well-known
+  conforms: true
+  evidence: The api-catalog document is served from the /.well-known/ registry path.
+- id: oauth2
+  conforms: true
+  evidence: >-
+    OAuth 2.0 client-credentials grant documented at
+    https://developer.artlist.io/authentication; token endpoint
+    https://artlist-business-api-prod-cognito.artlist.io/oauth2/token observed live
+    (400 on an unauthenticated POST); client_secret_basic token-endpoint auth.
+- id: rfc6749-client-credentials
+  conforms: true
+  evidence: grant_type=client_credentials with HTTP Basic client authentication and a 3600s bearer token.
+- id: oidc
+  conforms: false
+  evidence: >-
+    No OIDC discovery document. /.well-known/openid-configuration on the Cognito host
+    returns the Cognito "This URL doesn't exist on the authorization server" 404.
+- id: rfc8414-authorization-server-metadata
+  conforms: false
+  evidence: /.well-known/oauth-authorization-server returns 404 on every Artlist host.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors use a bespoke {success:false, error:{message, code, status}} envelope with
+    Content-Type application/json, not application/problem+json.
+- id: rfc6585-rate-limiting
+  conforms: partial
+  evidence: >-
+    429 Too Many Requests is documented with X-RateLimit-Limit / X-RateLimit-Remaining /
+    X-RateLimit-Reset headers, but not the standardized RateLimit / RateLimit-Policy fields
+    of the IETF rate-limit-headers draft, and no Retry-After is documented.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: No /.well-known/security.txt on developer.artlist.io, business.artlist.io or help.artlist.io.
+- id: llms-txt
+  conforms: true
+  evidence: >-
+    https://developer.artlist.io/llms.txt returns 200 text/plain with a docs index, an API
+    docs index and pointers to both OpenAPI documents.
+- id: model-context-protocol
+  conforms: true
+  evidence: >-
+    Hosted MCP server at https://developer.artlist.io/_mcp/server; anonymous
+    tools/list returns 200 with one tool (searchDocs) carrying a draft-07 inputSchema.
+- id: a2a-agent-card
+  conforms: false
+  evidence: >-
+    /.well-known/agent-card.json and /.well-known/agent.json return 404 on every reachable
+    Artlist host (403 behind the WAF on artlist.io, which is not a verified absence).
+- id: asyncapi
+  conforms: false
+  evidence: No event, streaming or webhook surface is documented — not applicable to this API.
+- id: iso-27001
+  conforms: true
+  evidence: >-
+    Artlist states it is ISO 27001 certified on its "Privacy at Artlist" help article
+    (https://help.artlist.io/hc/en-us/articles/29556821619101-Privacy-at-Artlist). The page is
+    behind an edge WAF that blocks non-browser clients (403), so this was captured from the
+    indexed content of that provider page rather than a direct fetch.
+- id: gdpr
+  conforms: true
+  evidence: >-
+    Artlist states it adheres to applicable data-protection laws including GDPR on the same
+    help article; a Privacy Policy and a Candidate Privacy Policy are published under
+    https://artlist.io/help-center/privacy-terms/.
+- id: soc2-type2
+  conforms: false
+  evidence: Artlist describes SOC 2 Type 2 as "coming soon" — not yet certified.
+compliance_program:
+  published: true
+  url: https://help.artlist.io/hc/en-us/articles/29556821619101-Privacy-at-Artlist
+  certifications:
+  - ISO 27001
+  in_progress:
+  - SOC 2 Type 2
+  regulations:
+  - GDPR

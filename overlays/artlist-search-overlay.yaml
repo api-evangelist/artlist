@@ -1,0 +1,121 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Artlist Enterprise Search API
+  version: 1.0.0
+extends: openapi/artlist-search-openapi-original.yml
+x-generated: '2026-08-02'
+x-method: generated
+x-source: >-
+  Derived from https://developer.artlist.io/openapi/search.yaml plus the documented
+  authentication, rate-limit, error and dictionary pages. Captures API Evangelist
+  enhancements without mutating the harvested original.
+actions:
+- target: $.info
+  update:
+    description: >-
+      Search the Artlist music catalog. Retrieve songs with mood, genre, instrument and
+      video-theme category filters plus BPM, duration, vocal-type and free-text query, and
+      resolve artists and albums by id. Responses carry AAC stream URLs, waveform URLs,
+      artwork and the genre-category taxonomy. Paged at 20 results per request.
+    contact:
+      name: Artlist Enterprise API Support
+      email: enterprise-api-support@artlist.io
+      url: https://developer.artlist.io/welcome
+    x-apievangelist-provider: artlist
+    x-apievangelist-enriched: '2026-08-02'
+- target: $.servers
+  description: >-
+    The harvested document declares a placeholder server (https://host.com) while each path
+    key embeds the absolute URL. Replace with the real base URL documented at
+    developer.artlist.io.
+  update:
+  - url: https://business.artlist.io/search/v1
+    description: Artlist Enterprise Search API, production
+- target: $.components
+  description: >-
+    The harvested document declares no securitySchemes despite a documented OAuth 2.0
+    client-credentials flow. Add the scheme described at
+    https://developer.artlist.io/authentication.
+  update:
+    securitySchemes:
+      OAuth2ClientCredentials:
+        type: oauth2
+        description: >-
+          OAuth 2.0 client-credentials grant. Base64-encode client_id:client_secret into an
+          Authorization: Basic header, POST grant_type=client_credentials to the token
+          endpoint, then send the returned access_token as a Bearer token. Tokens expire
+          after 3600 seconds. Credentials are issued by an Artlist account manager.
+        flows:
+          clientCredentials:
+            tokenUrl: https://artlist-business-api-prod-cognito.artlist.io/oauth2/token
+            scopes: {}
+- target: $
+  description: Apply the OAuth 2.0 requirement to every operation.
+  update:
+    security:
+    - OAuth2ClientCredentials: []
+- target: $.paths['/https://business.artlist.io/search/v1/song'].get
+  update:
+    description: >-
+      Search the song catalog. Filter with a free-text query, category ids from the Artlist
+      song dictionary (https://developer.artlist.io/dictionaries), vocal type, and
+      duration/BPM ranges. Returns 20 songs per page plus a total count.
+    x-rate-limit: 50 requests per minute (/search surface)
+- target: $.paths['/https://business.artlist.io/search/v1/song'].get.parameters[?(@.name=='vocalType')].schema
+  description: >-
+    The documented allowed values are expressed only in prose in the parameter description.
+    Promote them to a JSON Schema enum so generated clients validate.
+  update:
+    enum:
+    - VOCAL_AND_INSTRUMENTS
+    - VOCAL
+    - INSTRUMENTAL
+    - FEMALE_VOCAL
+    - MALE_VOCAL
+    - DUET
+    - GROUP
+    - ACAPELLA
+- target: $.paths['/https://business.artlist.io/search/v1/song'].get.parameters[?(@.name=='durationMin')].schema
+  update:
+    minimum: 0
+    maximum: 420
+- target: $.paths['/https://business.artlist.io/search/v1/song'].get.parameters[?(@.name=='durationMax')].schema
+  update:
+    minimum: 0
+    maximum: 420
+- target: $.paths['/https://business.artlist.io/search/v1/song'].get.parameters[?(@.name=='bpmMin')].schema
+  update:
+    minimum: 0
+    maximum: 200
+- target: $.paths['/https://business.artlist.io/search/v1/song'].get.parameters[?(@.name=='bpmMax')].schema
+  update:
+    minimum: 0
+    maximum: 200
+- target: $.paths['/https://business.artlist.io/search/v1/song'].get.parameters[?(@.name=='page')].schema
+  update:
+    minimum: 1
+- target: $.paths['/https://business.artlist.io/search/v1/song/{id}'].get
+  update:
+    description: Retrieve a single song by its Artlist id.
+- target: $.paths['/https://business.artlist.io/search/v1/artist/{id}'].get
+  update:
+    description: Retrieve an artist profile by id, including bio and cover/profile imagery.
+- target: $.paths['/https://business.artlist.io/search/v1/album/{id}'].get
+  update:
+    description: Retrieve an album by id, including its primary and featured artists.
+- target: $.tags
+  description: The harvested document tags operations but declares no tag objects.
+  update:
+  - name: song
+    description: Song search and retrieval.
+  - name: artist
+    description: Artist profiles.
+  - name: album
+    description: Albums and their artist credits.
+x-not-applied:
+  note: >-
+    Error responses are deliberately NOT added here. Artlist documents a status-code table
+    and a bespoke error envelope at https://developer.artlist.io/responses-api, but the
+    per-operation mapping is not published, so adding 4xx responses would assert something
+    the provider has not. The documented envelope is captured in
+    errors/artlist-problem-types.yml instead.

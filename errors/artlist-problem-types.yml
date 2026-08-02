@@ -1,0 +1,77 @@
+generated: '2026-08-02'
+method: searched
+source: https://developer.artlist.io/responses-api
+docs: https://developer.artlist.io/responses-api
+format: custom
+description: >-
+  Artlist documents a single, consistent error envelope for every Enterprise API failure and
+  a table of the HTTP status codes it returns. The envelope is NOT RFC 9457
+  application/problem+json — it is a bespoke {success, error{message, code, status}} shape.
+  Note that neither published OpenAPI document declares any 4xx/5xx response, so this catalog
+  comes entirely from the documentation, not from the spec.
+envelope:
+  content_type: application/json
+  fields:
+    success: boolean — always false on an error response
+    error.message: human-readable error message (e.g. "Not found")
+    error.code: numeric Artlist error code
+    error.status: the HTTP status code, repeated in the body
+  example: |
+    {
+      "success": false,
+      "error": {
+        "message": "Not found",
+        "code": 1,
+        "status": 404
+      }
+    }
+problems:
+- status: 400
+  title: Bad Request
+  description: The request was malformed or carried invalid parameters.
+- status: 401
+  title: Unauthorized
+  description: >-
+    Missing, expired or invalid Bearer access token. Observed live on an unauthenticated GET
+    to https://business.artlist.io/search/v1/song (HTTP 401, application/json).
+  remediation: >-
+    Request a new access token from
+    https://artlist-business-api-prod-cognito.artlist.io/oauth2/token using the
+    client-credentials grant; tokens expire after 3600 seconds.
+- status: 403
+  title: Forbidden
+  description: The authenticated client is not permitted to perform this operation.
+- status: 404
+  title: Entity Not Found
+  description: >-
+    The requested song, artist, album or downloadable asset does not exist. Documented
+    example carries error.code 1.
+- status: 422
+  title: Input Validation Failed
+  description: >-
+    Request parameters failed validation — e.g. duration outside 0-420 seconds, BPM outside
+    0-200, a page number below 1, an unrecognised vocalType, or an unknown category id.
+- status: 429
+  title: Too Many Requests
+  description: >-
+    Rate limit exceeded. Inspect X-RateLimit-Limit, X-RateLimit-Remaining and
+    X-RateLimit-Reset on the response.
+  remediation: Back off exponentially until X-RateLimit-Reset seconds have elapsed.
+  detail: rate-limits/artlist-rate-limits.yml
+success_status:
+- status: 200
+  title: Success
+codes:
+  registry_published: false
+  observed:
+  - code: 1
+    context: 404 Entity Not Found (documented example payload)
+  note: >-
+    Artlist does not publish a numeric error-code registry; only error.code 1 appears in the
+    documented example. Codes beyond that require an authenticated integration to observe.
+gaps:
+- >-
+  No error responses are declared in either OpenAPI document — the spec advertises only 200
+  responses, so a generated client has no typed error handling.
+- Error responses are not RFC 9457 problem+json.
+- No documented numeric error-code registry.

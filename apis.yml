@@ -1,18 +1,92 @@
 aid: artlist
 name: Artlist
-description: 'Artlist is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'Artlist is a creative-assets platform for video creators, marketers and
+  brands, licensing royalty-free music, sound effects, stock footage, video templates,
+  LUTs and editing plugins alongside a generative AI toolkit. The Artlist Enterprise
+  API, published at developer.artlist.io, opens the company''s music catalog to partner
+  platforms: a Search API for songs, artists and albums with mood/genre/instrument
+  category filters plus BPM, duration, vocal-type and free-text facets, and a Download
+  API that mints signed MP3/WAV asset URLs for licensed assets. Access is OAuth 2.0
+  client-credentials against an Amazon Cognito authorization server with credentials
+  issued by an account manager, and the developer portal publishes OpenAPI 3.1 definitions,
+  an llms.txt index, an RFC 9727 /.well-known/api-catalog linkset and a hosted MCP
+  server for documentation search.'
+image: https://fdr-prod-docs-files-public.s3.us-east-1.amazonaws.com/artlist.docs.buildwithfern.com/55c8148c837879232b42a92524952487559fe4e81d1d81b61c162440bdbaf680/docs/assets/artlist-light.svg
 url: https://raw.githubusercontent.com/api-evangelist/artlist/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enrichment
 specificationVersion: '0.20'
 created: '2026-08-02'
 modified: '2026-08-02'
 tags:
 - Company
-apis: []
+- Music
+- Audio
+- Media
+- Stock Media
+- Content Licensing
+- Creative Tools
+- Search
+- Generative AI
+- Video
+apis:
+- aid: artlist:search
+  name: Artlist Enterprise Search API
+  description: Search and retrieve the Artlist music catalog — songs (with mood, genre,
+    instrument and video-theme category filters, BPM, duration, vocal type and free-text
+    query), artists and albums. Returns AAC stream URLs, waveform URLs, artwork and
+    the full genre-category taxonomy per song. Paged at 20 results per request.
+  humanURL: https://developer.artlist.io/search/song/song-controller-get-songs
+  baseURL: https://business.artlist.io/search/v1
+  tags:
+  - Music
+  - Search
+  - Catalog
+  - Metadata
+  properties:
+  - type: OpenAPI
+    url: openapi/artlist-search-openapi-original.yml
+  - type: Overlay
+    url: overlays/artlist-search-overlay.yaml
+  - type: Documentation
+    url: https://developer.artlist.io/search/song/song-controller-get-songs
+- aid: artlist:download
+  name: Artlist Enterprise Download API
+  description: Mint a downloadable URL for a licensed Artlist asset. Takes the asset
+    type (currently song), the asset id (numeric or UUID) and the desired format (mp3
+    or wave), and returns the URL of the downloadable asset.
+  humanURL: https://developer.artlist.io/download/downloadable/downloadable-controller-get-downloadable-url
+  baseURL: https://business.artlist.io/download/v1
+  tags:
+  - Music
+  - Download
+  - Licensing
+  properties:
+  - type: OpenAPI
+    url: openapi/artlist-download-openapi-original.yml
+  - type: Overlay
+    url: overlays/artlist-download-overlay.yaml
+  - type: Documentation
+    url: https://developer.artlist.io/download/downloadable/downloadable-controller-get-downloadable-url
+- aid: artlist:docs-mcp
+  name: Artlist Developer Docs MCP Server
+  description: Hosted Model Context Protocol server for the Artlist Enterprise API
+    documentation. Exposes a single anonymous read-only tool, searchDocs, that searches
+    developer.artlist.io and returns documentation passages with source URLs. Intended
+    for AI clients such as Claude Code and Cursor.
+  humanURL: https://developer.artlist.io/welcome
+  baseURL: https://developer.artlist.io/_mcp/server
+  tags:
+  - MCP
+  - Documentation
+  - AI
+  properties:
+  - type: MCPServer
+    url: mcp/artlist-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/artlist-tool-crosswalk.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +94,71 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://www.hiive.com/securities/artlist-stock
+  url: https://artlist.io/
+- type: DeveloperPortal
+  url: https://developer.artlist.io/
+- type: Documentation
+  url: https://developer.artlist.io/welcome
+- type: APIReference
+  url: https://developer.artlist.io/search/song/song-controller-get-songs
+- type: Console
+  url: https://developer.artlist.io/search/song/song-controller-get-songs
+- type: GettingStarted
+  url: https://developer.artlist.io/welcome
+- type: Support
+  url: https://help.artlist.io/hc/en-us
+- type: Blog
+  url: https://artlist.io/blog/
+- type: GitHubOrganization
+  url: https://github.com/Artlist-LTD
+- type: Pricing
+  url: https://artlist.io/pricing
+- type: SignUp
+  url: https://artlist.io/start-now
+- type: Login
+  url: https://artlist.io/sign-in
+- type: TermsOfService
+  url: https://artlist.io/help-center/privacy-terms/terms-of-use/
+- type: PrivacyPolicy
+  url: https://artlist.io/help-center/privacy-terms/privacy-policy/
+- type: Compliance
+  url: https://help.artlist.io/hc/en-us/articles/29556821619101-Privacy-at-Artlist
+- type: Enterprise
+  url: https://artlist.io/enterprise
+- type: Authentication
+  url: authentication/artlist-authentication.yml
+- type: Conventions
+  url: conventions/artlist-conventions.yml
+- type: RateLimits
+  url: rate-limits/artlist-rate-limits.yml
+- type: ErrorCatalog
+  url: errors/artlist-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/artlist-lifecycle.yml
+- type: Conformance
+  url: conformance/artlist-conformance.yml
+- type: DomainSecurity
+  url: security/artlist-domain-security.yml
+- type: WellKnown
+  url: well-known/artlist-well-known.yml
+- type: APICatalog
+  url: well-known/artlist-api-catalog.json
+- type: LLMsTxt
+  url: llms/artlist-llms.txt
+- type: DataModel
+  url: data-model/artlist-data-model.yml
+- type: Packages
+  url: packages/artlist-packages.yml
+- type: AgenticAccess
+  url: agentic-access/artlist-agentic-access.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: MCPServer
+  url: mcp/artlist-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/artlist-tool-crosswalk.yml
+x-enrichment:
+  date: '2026-08-02'
+  status: enriched
+  artifacts_added: 23
+  pass: local-v1

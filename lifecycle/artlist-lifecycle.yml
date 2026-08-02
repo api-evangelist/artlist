@@ -1,0 +1,59 @@
+generated: '2026-08-02'
+method: searched
+source: >-
+  https://developer.artlist.io/welcome, https://developer.artlist.io/general-terms,
+  https://developer.artlist.io/.well-known/api-catalog, plus the published OpenAPI documents
+description: >-
+  Lifecycle posture of the Artlist Enterprise API. Versioning is URI-path (v1 on both
+  surfaces) and the docs carry a "Last updated" date, but Artlist publishes no changelog, no
+  deprecation or sunset policy, no SLA and no status page. This is a young enterprise API —
+  the documentation itself says a self-service developer portal and self-service quota
+  visibility are still to come.
+versioning:
+  scheme: uri-path
+  current: v1
+  surfaces:
+    search: https://business.artlist.io/search/v1
+    download: https://business.artlist.io/download/v1
+  spec_version: 1.0.0
+  docs: https://developer.artlist.io/welcome
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: unknown
+  deprecation_header: unknown
+  note: No deprecation or sunset policy is published; no operation is marked deprecated in either OpenAPI document.
+deprecated_operations: []
+sla:
+  url: null
+  uptime_target: null
+  published: false
+status_page:
+  url: null
+  published: false
+  probe:
+    host: status.artlist.io
+    result: no DNS resolution
+    fetched: '2026-08-02'
+changelog:
+  url: null
+  published: false
+  note: >-
+    The welcome page carries a single "Last updated: January 2026" stamp; there is no dated
+    changelog or release-notes surface.
+docs_last_updated: '2026-01'
+support:
+  email: enterprise-api-support@artlist.io
+  help_center: https://help.artlist.io/hc/en-us
+  account_manager: true
+roadmap_signals:
+- Self-service developer portal for API key issuance — documented as "available soon".
+- Per-client quota visibility inside the developer portal — documented as "soon".
+- >-
+  Asset types beyond `song` on the Download API — the assetType enum currently contains only
+  `song` and the parameter description says "currently the supported asset type is 'song'".
+gaps:
+- No status page.
+- No deprecation / sunset policy.
+- No published SLA.
+- No dated changelog or release notes.

@@ -1,0 +1,136 @@
+generated: '2026-08-02'
+method: derived
+source: >-
+  openapi/artlist-search-openapi-original.yml, openapi/artlist-download-openapi-original.yml
+  — components.schemas $ref graph and id-reference fields; enriched from
+  https://developer.artlist.io/dictionaries
+description: >-
+  Entity-relationship graph of the Artlist Enterprise API. Three catalog entities — Song,
+  Artist, Album — plus a controlled genre-category vocabulary and a Download resource that
+  resolves an asset id to a delivery URL. Every entity is read-only over the public API.
+entities:
+- name: Song
+  schema: Song
+  source: openapi/artlist-search-openapi-original.yml
+  id_field: id
+  id_format: string (numeric id or UUID)
+  fields:
+    id: string
+    name: string
+    artist: SongArtistDetails
+    album: SongAlbumDetails
+    url: AAC stream URL of the song
+    imageUrl: album artwork URL
+    thumbImageUrl: album artwork thumbnail URL
+    waveSurferUrl: waveform peaks URL
+    duration: seconds (double)
+    bpmRate: beats per minute (double)
+    genreCategories: array of SongGenreCategoryDetails
+  operations:
+    read: [song-controller-get-song]
+    list: [song-controller-get-songs]
+- name: Artist
+  schema: Artist
+  source: openapi/artlist-search-openapi-original.yml
+  id_field: id
+  fields:
+    id: string
+    name: string
+    slug: URL slug
+    bio: string
+    profileImage: string
+    bioImage: string
+    coverImage: string
+  operations:
+    read: [artist-controller-get-artist]
+- name: Album
+  schema: Album
+  source: openapi/artlist-search-openapi-original.yml
+  id_field: id
+  fields:
+    id: string
+    name: string
+    description: string
+    slug: URL slug
+    artist: AlbumArtistDetails
+    coverImage: string
+    insetImage: string
+    featuredArtists: array of AlbumCollaborativeArtistDetails
+    primaryArtists: array of AlbumCollaborativeArtistDetails
+  operations:
+    read: [album-controller-get-album]
+- name: GenreCategory
+  schema: SongGenreCategoryDetails
+  source: openapi/artlist-search-openapi-original.yml
+  id_field: id
+  description: >-
+    A node in the Artlist song category vocabulary, spanning Mood, Genre, Instrument and
+    Video Theme facets. The full id → slug dictionary (98 entries) is published at
+    https://developer.artlist.io/dictionaries and is the vocabulary behind the categoryIds
+    filter.
+  operations:
+    filter: [song-controller-get-songs]
+- name: DownloadableUrl
+  schema: DownloadableUrl
+  source: openapi/artlist-download-openapi-original.yml
+  fields:
+    url: The URL of the downloadable asset
+  description: >-
+    Not a stored entity — a minted delivery URL for an asset, keyed by (assetType, id,
+    format). assetType currently enumerates only `song`; format enumerates `mp3` and `wave`.
+  operations:
+    read: [downloadable-controller-get-downloadable-url]
+relationships:
+- from: Song
+  to: Artist
+  cardinality: belongs_to
+  via: artist
+  ref: SongArtistDetails
+  note: >-
+    The embedded SongArtistDetails carries id/name/slug; resolve the full Artist with
+    artist-controller-get-artist using that id.
+- from: Song
+  to: Album
+  cardinality: belongs_to
+  via: album
+  ref: SongAlbumDetails
+  note: Resolve the full Album with album-controller-get-album using the embedded id.
+- from: Song
+  to: GenreCategory
+  cardinality: has_many
+  via: genreCategories
+  ref: SongGenreCategoryDetails
+- from: Album
+  to: Artist
+  cardinality: belongs_to
+  via: artist
+  ref: AlbumArtistDetails
+- from: Album
+  to: Artist
+  cardinality: has_many
+  via: primaryArtists
+  ref: AlbumCollaborativeArtistDetails
+- from: Album
+  to: Artist
+  cardinality: has_many
+  via: featuredArtists
+  ref: AlbumCollaborativeArtistDetails
+- from: DownloadableUrl
+  to: Song
+  cardinality: belongs_to
+  via: id
+  note: Bound by the (assetType=song, id) path parameters; the id is a Song id.
+envelopes:
+  GetSongResponse: { song: Song }
+  GetSongsResponse: { songs: [Song], total: number }
+  GetArtistResponse: { artist: Artist }
+  GetAlbumResponse: { album: Album }
+notes:
+- >-
+  Artlist uses an embedded-summary pattern rather than id-only references: Song embeds a
+  three-field artist and album summary, and Album embeds artist summaries. There is no
+  expand/include mechanism — full entities are fetched by a second call.
+- >-
+  There is no reverse-navigation operation: you cannot list an artist's songs or an album's
+  tracks. The only list operation is song search.
+- No write operations exist on the public API — the whole model is read-only.

@@ -1,0 +1,67 @@
+generated: '2026-08-02'
+method: derived
+source: mcp/artlist-mcp.yml + openapi/artlist-search-openapi-original.yml + openapi/artlist-download-openapi-original.yml
+description: >-
+  Binding between Artlist's published MCP tool surface and its OpenAPI operations. The
+  divergence here is total and worth recording: Artlist's MCP server is a documentation
+  search server, so it shares no capability with the Enterprise REST API. Every one of the
+  five REST operations is rest_only, and the single MCP tool is mcp_only. An agent that
+  connects only to the MCP server can read the docs but cannot search or download a single
+  asset.
+surfaces:
+  openapi:
+  - file: openapi/artlist-search-openapi-original.yml
+    operations: 4
+    base_url: https://business.artlist.io/search/v1
+    gated: true
+    gate: OAuth 2.0 client-credentials bearer token; credentials issued by an account manager
+  - file: openapi/artlist-download-openapi-original.yml
+    operations: 1
+    base_url: https://business.artlist.io/download/v1
+    gated: true
+    gate: OAuth 2.0 client-credentials bearer token
+  graphql: null
+  mcp:
+    url: https://developer.artlist.io/_mcp/server
+    gated: false
+    tools_list_status: 200
+    scope: documentation search only
+crosswalk: []
+mcp_only:
+- tool: searchDocs
+  reason: >-
+    Documentation retrieval over developer.artlist.io. There is no public REST operation for
+    docs search — the docs are served as HTML/markdown pages and indexed by the Fern-hosted
+    MCP server, not by the business.artlist.io API.
+rest_only:
+- capability: Song search and retrieval
+  operations:
+  - song-controller-get-songs
+  - song-controller-get-song
+  note: >-
+    Catalog search with categoryIds, vocalType, durationMin/Max, bpmMin/Max and free-text
+    query; and single-song retrieval by id. No MCP tool exposes either.
+- capability: Artist retrieval
+  operations:
+  - artist-controller-get-artist
+- capability: Album retrieval
+  operations:
+  - album-controller-get-album
+- capability: Asset download URL minting
+  operations:
+  - downloadable-controller-get-downloadable-url
+  note: Returns a signed downloadable URL for a song in mp3 or wave format.
+coverage:
+  tools_named: 1
+  tools_bound_to_rest: 0
+  mcp_only: 1
+  rest_operations_total: 5
+  rest_operations_with_a_tool: 0
+gaps:
+- >-
+  No MCP tool for catalog search. The Search API's parameters (query, categoryIds, vocalType,
+  bpm and duration ranges) map cleanly to an agent tool inputSchema and would be the highest
+  value first tool for an Artlist MCP server that fronted the API.
+- >-
+  No MCP tool for download-URL minting, which is the licensing-relevant action and would need
+  an explicit consequence/audit contract (see agentic-access/artlist-agentic-access.yml).

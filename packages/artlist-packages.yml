@@ -1,0 +1,50 @@
+generated: '2026-08-02'
+method: searched
+source: >-
+  npm registry search, PyPI JSON API, github.com/Artlist-LTD, github.com/ArtlistLtd,
+  https://developer.artlist.io/llms.txt and the full developer.artlist.io documentation index
+description: >-
+  Artlist publishes no first-party client library for the Enterprise API in any public
+  package registry. The documentation contains no SDK or install section, and neither of the
+  company's GitHub organizations hosts a client. Recorded as a verified negative so re-runs
+  do not re-search the same ground.
+packages: []
+registries_searched:
+- registry: npm
+  query: artlist
+  result: >-
+    No first-party client. The only Artlist-namespaced packages are @ofirpardo-artlist/*,
+    which are republished Playwright browser-automation forks by an Artlist employee — not
+    API clients.
+- registry: pypi
+  queries: [artlist, artlist-api, artlist-sdk]
+  result: 404 on all three
+- registry: rubygems
+  result: no first-party client
+- registry: packagist
+  result: no first-party client
+- registry: nuget
+  result: no first-party client
+- registry: crates.io
+  result: no first-party client
+- registry: maven-central
+  result: no first-party client
+- registry: pkg.go.dev
+  result: no first-party client
+github_organizations:
+- url: https://github.com/Artlist-LTD
+  name: ArtList.IO
+  public_repos: 6
+  content: >-
+    Machine-learning research forks and samples (CLMR, RAVE, CLAP, gensim,
+    aws-deep-learning-containers, a NestJS clean-architecture sample) — no API client.
+- url: https://github.com/ArtlistLtd
+  name: Artlist
+  public_repos: 0
+  content: Empty organization; links to https://artlist.io/.
+integration_path: >-
+  Integrate directly over HTTPS — request a bearer token from the Cognito token endpoint,
+  then call https://business.artlist.io/search/v1 and /download/v1. Generate a client from
+  openapi/artlist-search-openapi-original.yml and openapi/artlist-download-openapi-original.yml
+  (apply the overlays in overlays/ first — the harvested specs carry a placeholder
+  `https://host.com` server and absolute-URL path keys).

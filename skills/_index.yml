@@ -1,0 +1,40 @@
+generated: '2026-08-02'
+method: generated
+source: >-
+  Generated from openapi/artlist-search-openapi-original.yml,
+  openapi/artlist-download-openapi-original.yml and the documented conventions at
+  developer.artlist.io. Every step is grounded in an operationId that exists verbatim in the
+  published specs.
+description: >-
+  Packaged Agent Skills for the Artlist Enterprise API — one per marquee flow: catalog search
+  through to a licensed download, credit resolution for a native catalog UI, and the
+  generative-media scoring use case Artlist documents itself.
+skills:
+- file: artlist-find-and-download-a-track.md
+  name: Find and download an Artlist track
+  api: openapi/artlist-search-openapi-original.yml
+  operations:
+  - song-controller-get-songs
+  - song-controller-get-song
+  - downloadable-controller-get-downloadable-url
+- file: artlist-resolve-artist-and-album-credits.md
+  name: Resolve Artlist artist and album credits
+  api: openapi/artlist-search-openapi-original.yml
+  operations:
+  - song-controller-get-songs
+  - song-controller-get-song
+  - artist-controller-get-artist
+  - album-controller-get-album
+- file: artlist-score-generated-media.md
+  name: Score generated media with Artlist music
+  api: openapi/artlist-search-openapi-original.yml
+  operations:
+  - song-controller-get-songs
+  - downloadable-controller-get-downloadable-url
+shared_context:
+  authentication: authentication/artlist-authentication.yml
+  conventions: conventions/artlist-conventions.yml
+  errors: errors/artlist-problem-types.yml
+  rate_limits: rate-limits/artlist-rate-limits.yml
+  data_model: data-model/artlist-data-model.yml
+  agentic_access: agentic-access/artlist-agentic-access.yml

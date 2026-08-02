@@ -1,0 +1,70 @@
+generated: '2026-08-02'
+method: searched
+source: https://developer.artlist.io/authentication
+docs: https://developer.artlist.io/authentication
+description: >-
+  The Artlist Enterprise API is protected by an OAuth 2.0 client-credentials flow against an
+  Amazon Cognito authorization server, with credentials issued out-of-band by an Artlist
+  account manager. Neither published OpenAPI document declares a securityScheme, so this
+  profile is captured from the documentation rather than derived from the spec — see
+  `spec_gap` below.
+summary:
+  types:
+  - oauth2
+  api_key_in: []
+  oauth2_flows:
+  - clientCredentials
+  token_type: Bearer
+  scopes_documented: false
+schemes:
+- name: OAuth2ClientCredentials
+  type: oauth2
+  flow: clientCredentials
+  token_url: https://artlist-business-api-prod-cognito.artlist.io/oauth2/token
+  token_endpoint_auth_method: client_secret_basic
+  request:
+    content_type: application/x-www-form-urlencoded
+    body: grant_type=client_credentials
+    authorization_header: >-
+      Basic <base64(client_id:client_secret)>
+  response_fields:
+  - access_token
+  - token_type
+  - expires_in
+  token_lifetime_seconds: 3600
+  scopes: []
+  applies_to:
+  - openapi/artlist-search-openapi-original.yml
+  - openapi/artlist-download-openapi-original.yml
+  sources:
+  - https://developer.artlist.io/authentication
+request_authorization:
+  header: Authorization
+  format: Bearer <access_token>
+credential_issuance:
+  self_service: false
+  process: >-
+    client_id and client_secret are issued and managed by an Artlist account manager. The
+    documentation states that a self-service developer portal is "available soon".
+  contact: enterprise-api-support@artlist.io
+provider_guidance:
+- Never expose client_secret in client-side code.
+- Store client credentials securely.
+- Rotate client credentials periodically.
+- Access tokens expire after one hour; refresh before expiry.
+observed:
+  unauthenticated_call:
+    url: https://business.artlist.io/search/v1/song
+    http_status: 401
+    fetched: '2026-08-02'
+  token_endpoint:
+    url: https://artlist-business-api-prod-cognito.artlist.io/oauth2/token
+    unauthenticated_post_status: 400
+    fetched: '2026-08-02'
+  oidc_discovery: not published (404 on /.well-known/openid-configuration)
+spec_gap: >-
+  openapi/artlist-search-openapi-original.yml and openapi/artlist-download-openapi-original.yml
+  contain no components.securitySchemes and no security requirement on any operation, so the
+  machine-readable contract does not express the auth model that the docs describe. The
+  overlays in overlays/ add the missing oauth2 scheme as an API Evangelist enhancement without
+  mutating the harvested originals.

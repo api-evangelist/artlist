@@ -1,0 +1,150 @@
+generated: '2026-08-02'
+method: searched
+source: >-
+  https://developer.artlist.io/general-terms, https://developer.artlist.io/responses-api,
+  https://developer.artlist.io/authentication, https://developer.artlist.io/dictionaries —
+  plus the two published OpenAPI 3.1 documents.
+description: >-
+  Cross-cutting request/response semantics that apply to every Artlist Enterprise API
+  operation: auth style, versioning, pagination, filtering vocabulary, the error envelope,
+  rate-limit signaling and retry behaviour. Captured from the documentation and the OpenAPI,
+  not from any single endpoint.
+base_urls:
+  search: https://business.artlist.io/search/v1
+  download: https://business.artlist.io/download/v1
+api_style: REST over HTTPS, JSON responses, query-string filtering, GET-only surface
+
+authentication:
+  scheme: OAuth 2.0 client-credentials; Bearer access token on every request
+  token_endpoint: https://artlist-business-api-prod-cognito.artlist.io/oauth2/token
+  token_lifetime_seconds: 3600
+  docs: https://developer.artlist.io/authentication
+  detail: authentication/artlist-authentication.yml
+
+idempotency:
+  supported: false
+  idempotency_key_header: null
+  note: >-
+    Artlist documents no idempotency-key contract. Every published operation is a GET and is
+    therefore inherently safe and idempotent under HTTP semantics, but there is no
+    idempotency mechanism for a client to rely on for non-safe methods because no non-safe
+    methods are published. No Idempotency pointer is emitted in apis.yml — the provider has
+    no idempotency contract to point at.
+
+pagination:
+  style: page-number
+  request_params:
+    page: Required on song-controller-get-songs. Page number, starts at 1. Typed number/double in the spec.
+  response_fields:
+    songs: array of results
+    total: total matching result count
+  page_size: 20 results per request (fixed; not client-configurable)
+  applies_to:
+  - song-controller-get-songs
+  docs: https://developer.artlist.io/search/song/song-controller-get-songs
+
+filtering:
+  style: query parameters on song-controller-get-songs
+  params:
+    query: free-text search term
+    categoryIds: array of category ids spanning Instrument, Genre, Mood and Video Theme
+    vocalType: >-
+      enum-by-description — VOCAL_AND_INSTRUMENTS, VOCAL, INSTRUMENTAL, FEMALE_VOCAL,
+      MALE_VOCAL, DUET, GROUP, ACAPELLA (documented in the parameter description, not as a
+      JSON Schema enum)
+    durationMin / durationMax: seconds, 0 to 420
+    bpmMin / bpmMax: BPM, 0 to 200
+  controlled_vocabulary:
+    name: Song category dictionary
+    docs: https://developer.artlist.io/dictionaries
+    entries: 98 numeric category ids mapped to slugs (moods, genres, instruments, video themes)
+
+field_expansion:
+  supported: false
+sparse_fieldsets:
+  supported: false
+metadata:
+  supported: false
+
+versioning:
+  scheme: uri-path
+  current: v1
+  surfaces:
+    search: /search/v1
+    download: /download/v1
+  spec_version: 1.0.0 (info.version on both OpenAPI documents)
+  detail: lifecycle/artlist-lifecycle.yml
+
+error_envelope:
+  format: custom (not RFC 9457 problem+json)
+  shape:
+    success: boolean — false on error
+    error.message: human-readable message
+    error.code: numeric Artlist error code
+    error.status: HTTP status repeated in the body
+  example: |
+    {
+      "success": false,
+      "error": {
+        "message": "Not found",
+        "code": 1,
+        "status": 404
+      }
+    }
+  docs: https://developer.artlist.io/responses-api
+  detail: errors/artlist-problem-types.yml
+
+rate_limiting:
+  global: 100 requests per minute, rolling 60-second window
+  per_endpoint:
+    /search: 50 requests per minute
+    /download: 20 requests per minute
+  throttled_status: 429
+  headers:
+    X-RateLimit-Limit: total requests allowed
+    X-RateLimit-Remaining: requests remaining
+    X-RateLimit-Reset: seconds until the limit resets
+  provider_guidance:
+  - Implement exponential backoff when rate limits are reached.
+  - Monitor the rate-limit headers on every response.
+  - Contact support for temporary limit increases.
+  docs: https://developer.artlist.io/general-terms
+  detail: rate-limits/artlist-rate-limits.yml
+
+quota:
+  model: per-client quota allocated and managed by the Artlist account manager
+  self_service_visibility: false
+  note: Documentation states quotas "will soon be visible in the developer portal".
+  contact: enterprise-api-support@artlist.io
+
+request_tracing:
+  request_id_header: null
+  note: No request-id or correlation header is documented.
+
+media_delivery:
+  streaming: >-
+    Song responses carry a `url` (AAC stream), a `waveSurferUrl` (waveform) and artwork
+    (`imageUrl`, `thumbImageUrl`).
+  download: >-
+    downloadable-controller-get-downloadable-url returns a `url` for the licensed asset in
+    mp3 or wave format. Asset type is currently limited to `song`.
+
+agent_conventions:
+  markdown_pages: append `.md` to any developer.artlist.io page URL for clean markdown
+  section_index: append `/llms.txt` to any section URL for a section-scoped index
+  llms_txt: https://developer.artlist.io/llms.txt
+  mcp_server: https://developer.artlist.io/_mcp/server
+  api_catalog: https://developer.artlist.io/.well-known/api-catalog (RFC 9727 linkset)
+
+known_spec_defects:
+- >-
+  Both OpenAPI documents declare `servers: [{url: https://host.com}]` — a placeholder — while
+  each path key embeds the full absolute URL
+  (`/https://business.artlist.io/search/v1/song`). The real base URLs are
+  https://business.artlist.io/search/v1 and https://business.artlist.io/download/v1. The
+  overlays in overlays/ correct this without mutating the harvested originals.
+- No securitySchemes are declared in either document despite a documented OAuth 2.0 flow.
+- No 4xx/5xx responses are declared on any operation despite a documented status-code table.
+- >-
+  The API Responses page refers to "the Primer REST API" and the General Terms page to a
+  "Primer account manager" — leftover template text from another product.

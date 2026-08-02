@@ -1,0 +1,356 @@
+openapi: 3.1.0
+info:
+  title: Search
+  version: 1.0.0
+paths:
+  /https://business.artlist.io/search/v1/song/{id}:
+    get:
+      operationId: song-controller-get-song
+      summary: Song Controller Get Song
+      tags:
+        - song
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Get song by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSongResponse'
+  /https://business.artlist.io/search/v1/song:
+    get:
+      operationId: song-controller-get-songs
+      summary: Song Controller Get Songs
+      tags:
+        - song
+      parameters:
+        - name: page
+          in: query
+          description: Page number. Starts at 1
+          required: true
+          schema:
+            type: number
+            format: double
+        - name: categoryIds
+          in: query
+          description: category IDs, including Instrument, Genre, Mood & Video Theme; See [dictionary](/dictionaries).
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: vocalType
+          in: query
+          description: >-
+            Vocal type. Choose from a set of allowed values | VOCAL_AND_INSTRUMENTS, VOCAL, INSTRUMENTAL, FEMALE_VOCAL,
+            MALE_VOCAL, DUET, GROUP, ACAPELLA
+          required: false
+          schema:
+            type: string
+        - name: durationMin
+          in: query
+          description: Duration in seconds. 0 to 420
+          required: false
+          schema:
+            type: number
+            format: double
+        - name: durationMax
+          in: query
+          description: Duration in seconds. 0 to 420
+          required: false
+          schema:
+            type: number
+            format: double
+        - name: bpmMin
+          in: query
+          description: BPM rate. 0 to 200
+          required: false
+          schema:
+            type: number
+            format: double
+        - name: bpmMax
+          in: query
+          description: BPM rate. 0 to 200
+          required: false
+          schema:
+            type: number
+            format: double
+        - name: query
+          in: query
+          description: Search term
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Get songs. 20 per request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSongsResponse'
+  /https://business.artlist.io/search/v1/artist/{id}:
+    get:
+      operationId: artist-controller-get-artist
+      summary: Artist Controller Get Artist
+      tags:
+        - artist
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Get artist by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetArtistResponse'
+  /https://business.artlist.io/search/v1/album/{id}:
+    get:
+      operationId: album-controller-get-album
+      summary: Album Controller Get Album
+      tags:
+        - album
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Get album by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAlbumResponse'
+servers:
+  - url: https://host.com
+    description: Default
+components:
+  schemas:
+    SongArtistDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+          description: Slug of the artist for URL
+      required:
+        - id
+        - name
+        - slug
+      title: SongArtistDetails
+    SongAlbumDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+          description: Slug of the album for URL
+      required:
+        - id
+        - name
+        - slug
+      title: SongAlbumDetails
+    SongGenreCategoryDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - name
+      title: SongGenreCategoryDetails
+    Song:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        artist:
+          $ref: '#/components/schemas/SongArtistDetails'
+        album:
+          $ref: '#/components/schemas/SongAlbumDetails'
+        url:
+          type: string
+          description: AAC URL of the song
+        imageUrl:
+          type: string
+          description: Image URL of the album
+        thumbImageUrl:
+          type: string
+          description: Thumbnail image URL of the album
+        waveSurferUrl:
+          type: string
+          description: WaveSurfer URL of the song
+        duration:
+          type: number
+          format: double
+          description: Duration of the song in seconds
+        bpmRate:
+          type: number
+          format: double
+          description: BPM rate of the song
+        genreCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/SongGenreCategoryDetails'
+          description: Genre categories of the song
+      required:
+        - id
+        - name
+        - artist
+        - album
+        - url
+        - imageUrl
+        - thumbImageUrl
+        - waveSurferUrl
+        - duration
+        - bpmRate
+        - genreCategories
+      title: Song
+    GetSongResponse:
+      type: object
+      properties:
+        song:
+          $ref: '#/components/schemas/Song'
+      required:
+        - song
+      title: GetSongResponse
+    GetSongsResponse:
+      type: object
+      properties:
+        songs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Song'
+        total:
+          type: number
+          format: double
+      required:
+        - songs
+        - total
+      title: GetSongsResponse
+    Artist:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        profileImage:
+          type: string
+        slug:
+          type: string
+        bio:
+          type: string
+        bioImage:
+          type: string
+        coverImage:
+          type: string
+      required:
+        - id
+        - name
+        - profileImage
+        - slug
+        - bio
+        - bioImage
+        - coverImage
+      title: Artist
+    GetArtistResponse:
+      type: object
+      properties:
+        artist:
+          $ref: '#/components/schemas/Artist'
+      required:
+        - artist
+      title: GetArtistResponse
+    AlbumArtistDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+          description: Slug of the artist for URL
+      required:
+        - id
+        - name
+        - slug
+      title: AlbumArtistDetails
+    AlbumCollaborativeArtistDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - name
+      title: AlbumCollaborativeArtistDetails
+    Album:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        slug:
+          type: string
+        artist:
+          $ref: '#/components/schemas/AlbumArtistDetails'
+        coverImage:
+          type: string
+        insetImage:
+          type: string
+        featuredArtists:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlbumCollaborativeArtistDetails'
+          description: List of featured artists in the album
+        primaryArtists:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlbumCollaborativeArtistDetails'
+          description: List of primary artists in the album
+      required:
+        - id
+        - name
+        - description
+        - slug
+        - artist
+        - coverImage
+        - insetImage
+        - featuredArtists
+        - primaryArtists
+      title: Album
+    GetAlbumResponse:
+      type: object
+      properties:
+        album:
+          $ref: '#/components/schemas/Album'
+      required:
+        - album
+      title: GetAlbumResponse

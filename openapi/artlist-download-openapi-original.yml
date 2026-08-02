@@ -1,0 +1,62 @@
+openapi: 3.1.0
+info:
+  title: Download
+  version: 1.0.0
+paths:
+  /https://business.artlist.io/download/v1/downloadable/{assetType}/{id}/{format}:
+    get:
+      operationId: downloadable-controller-get-downloadable-url
+      summary: Downloadable Controller Get Downloadable Url
+      tags:
+        - downloadable
+      parameters:
+        - name: assetType
+          in: path
+          description: The type of the asset - currently the supported asset type is 'song'
+          required: true
+          schema:
+            $ref: '#/components/schemas/HttpsBusinessArtlistIoDownloadV1DownloadableAssetTypeIdFormatGetParametersAssetType'
+        - name: id
+          in: path
+          description: The ID of the downloadable item (number or UUID)
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: path
+          description: The format of the download
+          required: true
+          schema:
+            $ref: '#/components/schemas/HttpsBusinessArtlistIoDownloadV1DownloadableAssetTypeIdFormatGetParametersFormat'
+      responses:
+        '200':
+          description: Returns a downloadable URL
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DownloadableUrl'
+servers:
+  - url: https://host.com
+    description: Default
+components:
+  schemas:
+    HttpsBusinessArtlistIoDownloadV1DownloadableAssetTypeIdFormatGetParametersAssetType:
+      type: string
+      enum:
+        - song
+      title: HttpsBusinessArtlistIoDownloadV1DownloadableAssetTypeIdFormatGetParametersAssetType
+    HttpsBusinessArtlistIoDownloadV1DownloadableAssetTypeIdFormatGetParametersFormat:
+      type: string
+      enum:
+        - mp3
+        - wave
+      title: HttpsBusinessArtlistIoDownloadV1DownloadableAssetTypeIdFormatGetParametersFormat
+    DownloadableUrl:
+      type: object
+      properties:
+        url:
+          type: string
+          description: The URL of the downloadable asset
+      required:
+        - url
+      title: DownloadableUrl

@@ -1,0 +1,59 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Artlist
+providerId: artlist
+generated: '2026-08-02'
+method: searched
+created: '2026-08-02'
+modified: '2026-08-02'
+source: https://developer.artlist.io/general-terms
+tags:
+- Rate Limiting
+- Music
+- Media
+description: >-
+  Artlist publishes explicit rate limits for the Enterprise API: a 100 request/minute global
+  ceiling on a rolling 60-second window, with tighter per-surface limits on /search and
+  /download. Quota (as distinct from rate) is allocated per client by an account manager and
+  is not yet visible self-service.
+sources:
+- https://developer.artlist.io/general-terms
+headers:
+  limit: X-RateLimit-Limit
+  remaining: X-RateLimit-Remaining
+  reset: X-RateLimit-Reset
+  resetUnit: seconds
+responseCodes:
+  throttled: 429
+window:
+  type: rolling
+  seconds: 60
+  reset: Limits reset automatically at the start of each new window.
+limits:
+- name: Standard request quota
+  scope: client
+  metric: requests_per_minute
+  limit: 100
+  timeFrame: minute
+- name: Search endpoints
+  scope: client
+  metric: requests_per_minute
+  limit: 50
+  timeFrame: minute
+  path: /search
+- name: Download endpoints
+  scope: client
+  metric: requests_per_minute
+  limit: 20
+  timeFrame: minute
+  path: /download
+quota:
+  model: per-client, allocated and managed by the Artlist account manager
+  selfService: false
+  contact: enterprise-api-support@artlist.io
+  note: Documentation states quotas will soon be visible in the developer portal.
+bestPractices:
+- Implement exponential backoff when rate limits are reached.
+- Monitor rate-limit headers in API responses.
+- Contact support for temporary limit increases.
