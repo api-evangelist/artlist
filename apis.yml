@@ -32,50 +32,12 @@ tags:
 - Generative AI
 - Video
 apis:
-- aid: artlist:search
-  name: Artlist Enterprise Search API
-  description: Search and retrieve the Artlist music catalog — songs (with mood, genre,
-    instrument and video-theme category filters, BPM, duration, vocal type and free-text
-    query), artists and albums. Returns AAC stream URLs, waveform URLs, artwork and
-    the full genre-category taxonomy per song. Paged at 20 results per request.
-  humanURL: https://developer.artlist.io/search/song/song-controller-get-songs
-  baseURL: https://business.artlist.io/search/v1
-  tags:
-  - Music
-  - Search
-  - Catalog
-  - Metadata
-  properties:
-  - type: OpenAPI
-    url: openapi/artlist-search-openapi-original.yml
-  - type: Overlay
-    url: overlays/artlist-search-overlay.yaml
-  - type: Documentation
-    url: https://developer.artlist.io/search/song/song-controller-get-songs
-- aid: artlist:download
-  name: Artlist Enterprise Download API
-  description: Mint a downloadable URL for a licensed Artlist asset. Takes the asset
-    type (currently song), the asset id (numeric or UUID) and the desired format (mp3
-    or wave), and returns the URL of the downloadable asset.
-  humanURL: https://developer.artlist.io/download/downloadable/downloadable-controller-get-downloadable-url
-  baseURL: https://business.artlist.io/download/v1
-  tags:
-  - Music
-  - Download
-  - Licensing
-  properties:
-  - type: OpenAPI
-    url: openapi/artlist-download-openapi-original.yml
-  - type: Overlay
-    url: overlays/artlist-download-overlay.yaml
-  - type: Documentation
-    url: https://developer.artlist.io/download/downloadable/downloadable-controller-get-downloadable-url
 - aid: artlist:docs-mcp
   name: Artlist Developer Docs MCP Server
-  description: Hosted Model Context Protocol server for the Artlist Enterprise API
-    documentation. Exposes a single anonymous read-only tool, searchDocs, that searches
-    developer.artlist.io and returns documentation passages with source URLs. Intended
-    for AI clients such as Claude Code and Cursor.
+  description: >-
+    Hosted Model Context Protocol server for the Artlist Enterprise API documentation. Exposes a single
+    anonymous read-only tool, searchDocs, that searches developer.artlist.io and returns documentation
+    passages with source URLs. Intended for AI clients such as Claude Code and Cursor.
   humanURL: https://developer.artlist.io/welcome
   baseURL: https://developer.artlist.io/_mcp/server
   tags:
@@ -87,12 +49,74 @@ apis:
     url: mcp/artlist-mcp.yml
   - type: ToolCrosswalk
     url: mcp/artlist-tool-crosswalk.yml
+- aid: artlist:artlist-album-api
+  name: Artlist Album API
+  description: The album API from Artlist — 1 operation(s) for album.
+  humanURL: https://developer.artlist.io/search/song/song-controller-get-songs
+  baseURL: https://business.artlist.io/search/v1
+  tags:
+  - album
+  properties:
+  - type: OpenAPI
+    url: openapi/artlist-album-api-openapi.yml
+  - type: Documentation
+    url: https://developer.artlist.io/search/song/song-controller-get-songs
+  - type: Documentation
+    url: >-
+      https://developer.artlist.io/download/downloadable/downloadable-controller-get-downloadable-url
+- aid: artlist:artlist-artist-api
+  name: Artlist Artist API
+  description: The artist API from Artlist — 1 operation(s) for artist.
+  humanURL: https://developer.artlist.io/search/song/song-controller-get-songs
+  baseURL: https://business.artlist.io/search/v1
+  tags:
+  - artist
+  properties:
+  - type: OpenAPI
+    url: openapi/artlist-artist-api-openapi.yml
+  - type: Documentation
+    url: https://developer.artlist.io/search/song/song-controller-get-songs
+  - type: Documentation
+    url: >-
+      https://developer.artlist.io/download/downloadable/downloadable-controller-get-downloadable-url
+- aid: artlist:artlist-downloadable-api
+  name: Artlist Downloadable API
+  description: The downloadable API from Artlist — 1 operation(s) for downloadable.
+  humanURL: https://developer.artlist.io/search/song/song-controller-get-songs
+  baseURL: https://business.artlist.io/search/v1
+  tags:
+  - downloadable
+  properties:
+  - type: OpenAPI
+    url: openapi/artlist-downloadable-api-openapi.yml
+  - type: Documentation
+    url: https://developer.artlist.io/search/song/song-controller-get-songs
+  - type: Documentation
+    url: >-
+      https://developer.artlist.io/download/downloadable/downloadable-controller-get-downloadable-url
+- aid: artlist:artlist-song-api
+  name: Artlist Song API
+  description: The song API from Artlist — 2 operation(s) for song.
+  humanURL: https://developer.artlist.io/search/song/song-controller-get-songs
+  baseURL: https://business.artlist.io/search/v1
+  tags:
+  - song
+  properties:
+  - type: OpenAPI
+    url: openapi/artlist-song-api-openapi.yml
+  - type: Documentation
+    url: https://developer.artlist.io/search/song/song-controller-get-songs
+  - type: Documentation
+    url: >-
+      https://developer.artlist.io/download/downloadable/downloadable-controller-get-downloadable-url
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/artlist-download-overlay.yaml
 - type: Website
   url: https://artlist.io/
 - type: DeveloperPortal
