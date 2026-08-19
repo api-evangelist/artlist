@@ -1,0 +1,212 @@
+openapi: 3.2.0
+info:
+  title: Search Song API
+  version: 1.0.0
+servers:
+- url: https://host.com
+  description: Default
+tags:
+- name: song
+paths:
+  /https://business.artlist.io/search/v1/song/{id}:
+    get:
+      operationId: song-controller-get-song
+      summary: Song Controller Get Song
+      tags:
+      - song
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get song by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSongResponse'
+  /https://business.artlist.io/search/v1/song:
+    get:
+      operationId: song-controller-get-songs
+      summary: Song Controller Get Songs
+      tags:
+      - song
+      parameters:
+      - name: page
+        in: query
+        description: Page number. Starts at 1
+        required: true
+        schema:
+          type: number
+          format: double
+      - name: categoryIds
+        in: query
+        description: category IDs, including Instrument, Genre, Mood & Video Theme; See [dictionary](/dictionaries).
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: vocalType
+        in: query
+        description: Vocal type. Choose from a set of allowed values | VOCAL_AND_INSTRUMENTS, VOCAL, INSTRUMENTAL, FEMALE_VOCAL, MALE_VOCAL, DUET, GROUP, ACAPELLA
+        required: false
+        schema:
+          type: string
+      - name: durationMin
+        in: query
+        description: Duration in seconds. 0 to 420
+        required: false
+        schema:
+          type: number
+          format: double
+      - name: durationMax
+        in: query
+        description: Duration in seconds. 0 to 420
+        required: false
+        schema:
+          type: number
+          format: double
+      - name: bpmMin
+        in: query
+        description: BPM rate. 0 to 200
+        required: false
+        schema:
+          type: number
+          format: double
+      - name: bpmMax
+        in: query
+        description: BPM rate. 0 to 200
+        required: false
+        schema:
+          type: number
+          format: double
+      - name: query
+        in: query
+        description: Search term
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get songs. 20 per request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSongsResponse'
+components:
+  schemas:
+    GetSongsResponse:
+      type: object
+      properties:
+        songs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Song'
+        total:
+          type: number
+          format: double
+      required:
+      - songs
+      - total
+      title: GetSongsResponse
+    Song:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        artist:
+          $ref: '#/components/schemas/SongArtistDetails'
+        album:
+          $ref: '#/components/schemas/SongAlbumDetails'
+        url:
+          type: string
+          description: AAC URL of the song
+        imageUrl:
+          type: string
+          description: Image URL of the album
+        thumbImageUrl:
+          type: string
+          description: Thumbnail image URL of the album
+        waveSurferUrl:
+          type: string
+          description: WaveSurfer URL of the song
+        duration:
+          type: number
+          format: double
+          description: Duration of the song in seconds
+        bpmRate:
+          type: number
+          format: double
+          description: BPM rate of the song
+        genreCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/SongGenreCategoryDetails'
+          description: Genre categories of the song
+      required:
+      - id
+      - name
+      - artist
+      - album
+      - url
+      - imageUrl
+      - thumbImageUrl
+      - waveSurferUrl
+      - duration
+      - bpmRate
+      - genreCategories
+      title: Song
+    GetSongResponse:
+      type: object
+      properties:
+        song:
+          $ref: '#/components/schemas/Song'
+      required:
+      - song
+      title: GetSongResponse
+    SongGenreCategoryDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - id
+      - name
+      title: SongGenreCategoryDetails
+    SongAlbumDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+          description: Slug of the album for URL
+      required:
+      - id
+      - name
+      - slug
+      title: SongAlbumDetails
+    SongArtistDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+          description: Slug of the artist for URL
+      required:
+      - id
+      - name
+      - slug
+      title: SongArtistDetails

@@ -1,0 +1,127 @@
+{
+  "item": [
+    {
+      "id": "fabad101-0108-4d52-ab78-d11fa5f7287b",
+      "name": "album",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "14c783f0-3eb5-4aa9-9276-2124fbd080ca",
+          "name": "Album Controller Get Album",
+          "request": {
+            "name": "Album Controller Get Album",
+            "description": {},
+            "url": {
+              "protocol": "{{baseUrl}}/https",
+              "path": [
+                "search",
+                "v1",
+                "album",
+                ":id"
+              ],
+              "host": [
+                "business",
+                "artlist",
+                "io"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1d49d81d-8ce7-4682-88c6-980d70a61ec8",
+              "name": "Get album by id",
+              "originalRequest": {
+                "url": {
+                  "protocol": "{{baseUrl}}/https",
+                  "path": [
+                    "search",
+                    "v1",
+                    "album",
+                    ":id"
+                  ],
+                  "host": [
+                    "business",
+                    "artlist",
+                    "io"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"album\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"slug\": \"string\",\n    \"artist\": {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"slug\": \"string\"\n    },\n    \"coverImage\": \"string\",\n    \"insetImage\": \"string\",\n    \"featuredArtists\": [\n      {\n        \"id\": \"string\",\n        \"name\": \"string\"\n      },\n      {\n        \"id\": \"string\",\n        \"name\": \"string\"\n      }\n    ],\n    \"primaryArtists\": [\n      {\n        \"id\": \"string\",\n        \"name\": \"string\"\n      },\n      {\n        \"id\": \"string\",\n        \"name\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://host.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "81694422-9c8d-4224-b105-272f724559a8",
+    "name": "Search Album API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

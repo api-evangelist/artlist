@@ -2,12 +2,10 @@ generated: '2026-08-02'
 method: searched
 status: published
 source: https://developer.artlist.io/llms.txt
-description: >-
-  Artlist publishes a hosted, anonymous MCP server for its developer documentation. It is a
-  docs-search server, not a wrapper over the Enterprise API itself: the single tool searches
-  developer.artlist.io and returns documentation passages with source URLs. The Search and
-  Download APIs themselves remain REST-only and are reached with an OAuth 2.0
-  client-credentials bearer token.
+description: 'Artlist publishes a hosted, anonymous MCP server for its developer documentation. It is
+  a docs-search server, not a wrapper over the Enterprise API itself: the single tool searches developer.artlist.io
+  and returns documentation passages with source URLs. The Search and Download APIs themselves remain
+  REST-only and are reached with an OAuth 2.0 client-credentials bearer token.'
 server:
   name: artlist-developer-docs
   transport: http
@@ -18,7 +16,7 @@ server:
   - https://developer.artlist.io/welcome
   vendor: Fern (developer.artlist.io is a Fern-hosted docs site)
 introspection:
-  method: 'POST {"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+  method: POST {"jsonrpc":"2.0","id":1,"method":"tools/list"}
   accept: application/json, text/event-stream
   http_status: 200
   content_type: text/event-stream
@@ -27,8 +25,7 @@ introspection:
 tools:
 - name: searchDocs
   title: Search developer.artlist.io Docs
-  description: >-
-    Search the documentation at https://developer.artlist.io. Returns relevant doc passages
+  description: Search the documentation at https://developer.artlist.io. Returns relevant doc passages
     with source URLs.
   read_only: true
   input_schema:
@@ -45,7 +42,15 @@ coverage:
   tools_backed_by_rest_operations: 0
   rest_operations_total: 5
 notes:
-- The MCP server exposes documentation search only — no catalog search, no download, no
-  song/artist/album retrieval. Agents that need the catalog must call the REST API directly.
-- Artlist also advertises the AI-agent conventions on the same docs host, appending `.md` to
-  any page URL for clean markdown and `/llms.txt` to any section URL for a section index.
+- The MCP server exposes documentation search only — no catalog search, no download, no song/artist/album
+  retrieval. Agents that need the catalog must call the REST API directly.
+- Artlist also advertises the AI-agent conventions on the same docs host, appending `.md` to any page
+  URL for clean markdown and `/llms.txt` to any section URL for a section index.
+deployment:
+  mode: remote
+  endpoint: https://developer.artlist.io/_mcp/server
+  verified: probed
+  probe: live
+  tools: 1
+  checked: '2026-08-12'
+  source: catalog MCP census

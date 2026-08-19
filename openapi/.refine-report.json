@@ -1,0 +1,26 @@
+{
+  "provider": "artlist",
+  "sources": [
+    "artlist-album-api-openapi.yml",
+    "artlist-artist-api-openapi.yml",
+    "artlist-downloadable-api-openapi.yml",
+    "artlist-song-api-openapi.yml"
+  ],
+  "outputs": [
+    "artlist-album-api-openapi.yml",
+    "artlist-artist-api-openapi.yml",
+    "artlist-downloadable-api-openapi.yml",
+    "artlist-song-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "artlist-album-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "artlist-artist-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "artlist-downloadable-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "artlist-song-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": []
+}

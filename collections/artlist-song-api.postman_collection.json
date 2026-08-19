@@ -1,0 +1,296 @@
+{
+  "item": [
+    {
+      "id": "6ab3a0d5-734e-4784-b8d8-16d99350b2d5",
+      "name": "song",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "61be8df6-de82-4aeb-aeaa-e569d94230c9",
+          "name": "Song Controller Get Song",
+          "request": {
+            "name": "Song Controller Get Song",
+            "description": {},
+            "url": {
+              "protocol": "{{baseUrl}}/https",
+              "path": [
+                "search",
+                "v1",
+                "song",
+                ":id"
+              ],
+              "host": [
+                "business",
+                "artlist",
+                "io"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e507d4b0-56f6-4cbe-809d-c9189dbec046",
+              "name": "Get song by id",
+              "originalRequest": {
+                "url": {
+                  "protocol": "{{baseUrl}}/https",
+                  "path": [
+                    "search",
+                    "v1",
+                    "song",
+                    ":id"
+                  ],
+                  "host": [
+                    "business",
+                    "artlist",
+                    "io"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"song\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"artist\": {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"slug\": \"string\"\n    },\n    \"album\": {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"slug\": \"string\"\n    },\n    \"url\": \"string\",\n    \"imageUrl\": \"string\",\n    \"thumbImageUrl\": \"string\",\n    \"waveSurferUrl\": \"string\",\n    \"duration\": 2727.164753792809,\n    \"bpmRate\": 7498.280526772657,\n    \"genreCategories\": [\n      {\n        \"id\": \"string\",\n        \"name\": \"string\"\n      },\n      {\n        \"id\": \"string\",\n        \"name\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b582f588-3bfa-4997-a37e-78d630c72c3a",
+          "name": "Song Controller Get Songs",
+          "request": {
+            "name": "Song Controller Get Songs",
+            "description": {},
+            "url": {
+              "protocol": "{{baseUrl}}/https",
+              "path": [
+                "search",
+                "v1",
+                "song"
+              ],
+              "host": [
+                "business",
+                "artlist",
+                "io"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<double>",
+                  "description": "(Required) Page number. Starts at 1"
+                },
+                {
+                  "disabled": false,
+                  "key": "categoryIds",
+                  "value": "<string>",
+                  "description": "category IDs, including Instrument, Genre, Mood & Video Theme; See [dictionary](/dictionaries)."
+                },
+                {
+                  "disabled": false,
+                  "key": "categoryIds",
+                  "value": "<string>",
+                  "description": "category IDs, including Instrument, Genre, Mood & Video Theme; See [dictionary](/dictionaries)."
+                },
+                {
+                  "disabled": false,
+                  "key": "vocalType",
+                  "value": "<string>",
+                  "description": "Vocal type. Choose from a set of allowed values | VOCAL_AND_INSTRUMENTS, VOCAL, INSTRUMENTAL, FEMALE_VOCAL, MALE_VOCAL, DUET, GROUP, ACAPELLA"
+                },
+                {
+                  "disabled": false,
+                  "key": "durationMin",
+                  "value": "<double>",
+                  "description": "Duration in seconds. 0 to 420"
+                },
+                {
+                  "disabled": false,
+                  "key": "durationMax",
+                  "value": "<double>",
+                  "description": "Duration in seconds. 0 to 420"
+                },
+                {
+                  "disabled": false,
+                  "key": "bpmMin",
+                  "value": "<double>",
+                  "description": "BPM rate. 0 to 200"
+                },
+                {
+                  "disabled": false,
+                  "key": "bpmMax",
+                  "value": "<double>",
+                  "description": "BPM rate. 0 to 200"
+                },
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "Search term"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "27bac18d-c1f7-43d9-87a3-50caa35359c4",
+              "name": "Get songs. 20 per request",
+              "originalRequest": {
+                "url": {
+                  "protocol": "{{baseUrl}}/https",
+                  "path": [
+                    "search",
+                    "v1",
+                    "song"
+                  ],
+                  "host": [
+                    "business",
+                    "artlist",
+                    "io"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "categoryIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "categoryIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "vocalType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "durationMin",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "durationMax",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "bpmMin",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "bpmMax",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"songs\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"artist\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"slug\": \"string\"\n      },\n      \"album\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"slug\": \"string\"\n      },\n      \"url\": \"string\",\n      \"imageUrl\": \"string\",\n      \"thumbImageUrl\": \"string\",\n      \"waveSurferUrl\": \"string\",\n      \"duration\": 8142.56959789396,\n      \"bpmRate\": 2687.722525227799,\n      \"genreCategories\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"string\"\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"artist\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"slug\": \"string\"\n      },\n      \"album\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"slug\": \"string\"\n      },\n      \"url\": \"string\",\n      \"imageUrl\": \"string\",\n      \"thumbImageUrl\": \"string\",\n      \"waveSurferUrl\": \"string\",\n      \"duration\": 4365.102720389009,\n      \"bpmRate\": 6193.766263585634,\n      \"genreCategories\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"total\": 8100.6745854128485\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://host.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "cbef4801-9ae4-40fe-aa05-fe2c3867cc4e",
+    "name": "Search Song API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

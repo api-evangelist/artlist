@@ -1,0 +1,36 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Search Artist API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "artist",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Artist Controller Get Artist",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://host.com/https://business.artlist.io/search/v1/artist/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Artist Controller Get Artist"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

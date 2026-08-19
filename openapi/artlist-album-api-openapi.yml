@@ -1,0 +1,103 @@
+openapi: 3.2.0
+info:
+  title: Search Album API
+  version: 1.0.0
+servers:
+- url: https://host.com
+  description: Default
+tags:
+- name: album
+paths:
+  /https://business.artlist.io/search/v1/album/{id}:
+    get:
+      operationId: album-controller-get-album
+      summary: Album Controller Get Album
+      tags:
+      - album
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get album by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAlbumResponse'
+components:
+  schemas:
+    Album:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        slug:
+          type: string
+        artist:
+          $ref: '#/components/schemas/AlbumArtistDetails'
+        coverImage:
+          type: string
+        insetImage:
+          type: string
+        featuredArtists:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlbumCollaborativeArtistDetails'
+          description: List of featured artists in the album
+        primaryArtists:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlbumCollaborativeArtistDetails'
+          description: List of primary artists in the album
+      required:
+      - id
+      - name
+      - description
+      - slug
+      - artist
+      - coverImage
+      - insetImage
+      - featuredArtists
+      - primaryArtists
+      title: Album
+    GetAlbumResponse:
+      type: object
+      properties:
+        album:
+          $ref: '#/components/schemas/Album'
+      required:
+      - album
+      title: GetAlbumResponse
+    AlbumCollaborativeArtistDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - id
+      - name
+      title: AlbumCollaborativeArtistDetails
+    AlbumArtistDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+          description: Slug of the artist for URL
+      required:
+      - id
+      - name
+      - slug
+      title: AlbumArtistDetails

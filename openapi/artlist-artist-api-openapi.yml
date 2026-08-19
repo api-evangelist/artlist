@@ -1,0 +1,65 @@
+openapi: 3.2.0
+info:
+  title: Search Artist API
+  version: 1.0.0
+servers:
+- url: https://host.com
+  description: Default
+tags:
+- name: artist
+paths:
+  /https://business.artlist.io/search/v1/artist/{id}:
+    get:
+      operationId: artist-controller-get-artist
+      summary: Artist Controller Get Artist
+      tags:
+      - artist
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get artist by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetArtistResponse'
+components:
+  schemas:
+    Artist:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        profileImage:
+          type: string
+        slug:
+          type: string
+        bio:
+          type: string
+        bioImage:
+          type: string
+        coverImage:
+          type: string
+      required:
+      - id
+      - name
+      - profileImage
+      - slug
+      - bio
+      - bioImage
+      - coverImage
+      title: Artist
+    GetArtistResponse:
+      type: object
+      properties:
+        artist:
+          $ref: '#/components/schemas/Artist'
+      required:
+      - artist
+      title: GetArtistResponse
