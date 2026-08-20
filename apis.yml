@@ -43,6 +43,10 @@ apis:
   tags:
   - MCP
   - Documentation
+  - Artificial Intelligence
+  tags_raw:
+  - MCP
+  - Documentation
   - AI
   properties:
   - type: MCPServer
@@ -55,6 +59,8 @@ apis:
   humanURL: https://developer.artlist.io/search/song/song-controller-get-songs
   baseURL: https://business.artlist.io/search/v1
   tags:
+  - Album
+  tags_raw:
   - album
   properties:
   - type: OpenAPI
@@ -70,6 +76,8 @@ apis:
   humanURL: https://developer.artlist.io/search/song/song-controller-get-songs
   baseURL: https://business.artlist.io/search/v1
   tags:
+  - Artists
+  tags_raw:
   - artist
   properties:
   - type: OpenAPI
@@ -100,6 +108,8 @@ apis:
   humanURL: https://developer.artlist.io/search/song/song-controller-get-songs
   baseURL: https://business.artlist.io/search/v1
   tags:
+  - Song
+  tags_raw:
   - song
   properties:
   - type: OpenAPI
