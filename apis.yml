@@ -11,6 +11,18 @@ description: 'Artlist is a creative-assets platform for video creators, marketer
   issued by an account manager, and the developer portal publishes OpenAPI 3.1 definitions,
   an llms.txt index, an RFC 9727 /.well-known/api-catalog linkset and a hosted MCP
   server for documentation search.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://fdr-prod-docs-files-public.s3.us-east-1.amazonaws.com/artlist.docs.buildwithfern.com/55c8148c837879232b42a92524952487559fe4e81d1d81b61c162440bdbaf680/docs/assets/artlist-light.svg
 url: https://raw.githubusercontent.com/api-evangelist/artlist/refs/heads/main/apis.yml
 x-type: company
