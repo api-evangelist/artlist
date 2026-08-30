@@ -71,7 +71,7 @@ apis:
   humanURL: https://developer.artlist.io/search/song/song-controller-get-songs
   baseURL: https://business.artlist.io/search/v1
   tags:
-  - Album
+  - album
   tags_raw:
   - album
   properties:
@@ -88,7 +88,7 @@ apis:
   humanURL: https://developer.artlist.io/search/song/song-controller-get-songs
   baseURL: https://business.artlist.io/search/v1
   tags:
-  - Artists
+  - artist
   tags_raw:
   - artist
   properties:
@@ -120,7 +120,7 @@ apis:
   humanURL: https://developer.artlist.io/search/song/song-controller-get-songs
   baseURL: https://business.artlist.io/search/v1
   tags:
-  - Song
+  - song
   tags_raw:
   - song
   properties:
