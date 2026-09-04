@@ -23,6 +23,20 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  - rate-limits
+  - security
+  generated: '2026-09-02'
+  method: derived
 image: https://fdr-prod-docs-files-public.s3.us-east-1.amazonaws.com/artlist.docs.buildwithfern.com/55c8148c837879232b42a92524952487559fe4e81d1d81b61c162440bdbaf680/docs/assets/artlist-light.svg
 url: https://raw.githubusercontent.com/api-evangelist/artlist/refs/heads/main/apis.yml
 x-type: company
