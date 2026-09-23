@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Download Downloadable API
+  title: Downloadable API
   version: 1.0.0
 servers:
 - url: https://host.com
@@ -42,11 +42,6 @@ paths:
                 $ref: '#/components/schemas/DownloadableUrl'
 components:
   schemas:
-    HttpsBusinessArtlistIoDownloadV1DownloadableAssetTypeIdFormatGetParametersAssetType:
-      type: string
-      enum:
-      - song
-      title: HttpsBusinessArtlistIoDownloadV1DownloadableAssetTypeIdFormatGetParametersAssetType
     HttpsBusinessArtlistIoDownloadV1DownloadableAssetTypeIdFormatGetParametersFormat:
       type: string
       enum:
@@ -62,3 +57,8 @@ components:
       required:
       - url
       title: DownloadableUrl
+    HttpsBusinessArtlistIoDownloadV1DownloadableAssetTypeIdFormatGetParametersAssetType:
+      type: string
+      enum:
+      - song
+      title: HttpsBusinessArtlistIoDownloadV1DownloadableAssetTypeIdFormatGetParametersAssetType

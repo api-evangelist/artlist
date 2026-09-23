@@ -6,14 +6,14 @@ servers:
 - url: https://host.com
   description: Default
 tags:
-- name: song
+- name: Song
 paths:
   /https://business.artlist.io/search/v1/song/{id}:
     get:
       operationId: song-controller-get-song
       summary: Song Controller Get Song
       tags:
-      - song
+      - Song
       parameters:
       - name: id
         in: path
@@ -32,7 +32,7 @@ paths:
       operationId: song-controller-get-songs
       summary: Song Controller Get Songs
       tags:
-      - song
+      - Song
       parameters:
       - name: page
         in: query
@@ -98,20 +98,32 @@ paths:
                 $ref: '#/components/schemas/GetSongsResponse'
 components:
   schemas:
-    GetSongsResponse:
+    SongGenreCategoryDetails:
       type: object
       properties:
-        songs:
-          type: array
-          items:
-            $ref: '#/components/schemas/Song'
-        total:
-          type: number
-          format: double
+        id:
+          type: string
+        name:
+          type: string
       required:
-      - songs
-      - total
-      title: GetSongsResponse
+      - id
+      - name
+      title: SongGenreCategoryDetails
+    SongArtistDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+          description: Slug of the artist for URL
+      required:
+      - id
+      - name
+      - slug
+      title: SongArtistDetails
     Song:
       type: object
       properties:
@@ -161,6 +173,20 @@ components:
       - bpmRate
       - genreCategories
       title: Song
+    GetSongsResponse:
+      type: object
+      properties:
+        songs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Song'
+        total:
+          type: number
+          format: double
+      required:
+      - songs
+      - total
+      title: GetSongsResponse
     GetSongResponse:
       type: object
       properties:
@@ -169,17 +195,6 @@ components:
       required:
       - song
       title: GetSongResponse
-    SongGenreCategoryDetails:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-      required:
-      - id
-      - name
-      title: SongGenreCategoryDetails
     SongAlbumDetails:
       type: object
       properties:
@@ -195,18 +210,3 @@ components:
       - name
       - slug
       title: SongAlbumDetails
-    SongArtistDetails:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        slug:
-          type: string
-          description: Slug of the artist for URL
-      required:
-      - id
-      - name
-      - slug
-      title: SongArtistDetails

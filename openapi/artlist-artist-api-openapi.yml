@@ -6,14 +6,14 @@ servers:
 - url: https://host.com
   description: Default
 tags:
-- name: artist
+- name: Artist
 paths:
   /https://business.artlist.io/search/v1/artist/{id}:
     get:
       operationId: artist-controller-get-artist
       summary: Artist Controller Get Artist
       tags:
-      - artist
+      - Artist
       parameters:
       - name: id
         in: path
@@ -29,6 +29,14 @@ paths:
                 $ref: '#/components/schemas/GetArtistResponse'
 components:
   schemas:
+    GetArtistResponse:
+      type: object
+      properties:
+        artist:
+          $ref: '#/components/schemas/Artist'
+      required:
+      - artist
+      title: GetArtistResponse
     Artist:
       type: object
       properties:
@@ -55,11 +63,3 @@ components:
       - bioImage
       - coverImage
       title: Artist
-    GetArtistResponse:
-      type: object
-      properties:
-        artist:
-          $ref: '#/components/schemas/Artist'
-      required:
-      - artist
-      title: GetArtistResponse

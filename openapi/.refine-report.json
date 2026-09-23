@@ -1,26 +1,32 @@
 {
   "provider": "artlist",
   "sources": [
-    "artlist-album-api-openapi.yml",
-    "artlist-artist-api-openapi.yml",
-    "artlist-downloadable-api-openapi.yml",
-    "artlist-song-api-openapi.yml"
+    "_original/artlist-download-openapi-original.yml",
+    "_original/artlist-search-openapi-original.yml"
   ],
   "outputs": [
+    "artlist-downloadable-api-openapi.yml",
     "artlist-album-api-openapi.yml",
     "artlist-artist-api-openapi.yml",
-    "artlist-downloadable-api-openapi.yml",
     "artlist-song-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
-    "artlist-album-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "artlist-artist-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "artlist-downloadable-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "artlist-song-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "artlist-download-openapi-original.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "artlist-download-openapi-original.yml: declared missing tag: downloadable",
+    "artlist-search-openapi-original.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "artlist-search-openapi-original.yml: declared missing tag: album",
+    "artlist-search-openapi-original.yml: declared missing tag: artist",
+    "artlist-search-openapi-original.yml: declared missing tag: song",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "artlist-album-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "artlist-artist-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "artlist-downloadable-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "artlist-song-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

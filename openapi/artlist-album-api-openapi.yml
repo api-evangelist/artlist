@@ -6,14 +6,14 @@ servers:
 - url: https://host.com
   description: Default
 tags:
-- name: album
+- name: Album
 paths:
   /https://business.artlist.io/search/v1/album/{id}:
     get:
       operationId: album-controller-get-album
       summary: Album Controller Get Album
       tags:
-      - album
+      - Album
       parameters:
       - name: id
         in: path
@@ -67,14 +67,6 @@ components:
       - featuredArtists
       - primaryArtists
       title: Album
-    GetAlbumResponse:
-      type: object
-      properties:
-        album:
-          $ref: '#/components/schemas/Album'
-      required:
-      - album
-      title: GetAlbumResponse
     AlbumCollaborativeArtistDetails:
       type: object
       properties:
@@ -101,3 +93,11 @@ components:
       - name
       - slug
       title: AlbumArtistDetails
+    GetAlbumResponse:
+      type: object
+      properties:
+        album:
+          $ref: '#/components/schemas/Album'
+      required:
+      - album
+      title: GetAlbumResponse
