@@ -42,11 +42,12 @@ paths:
                 $ref: '#/components/schemas/DownloadableUrl'
 components:
   schemas:
-    HttpsBusinessArtlistIoDownloadV1DownloadableAssetTypeIdFormatGetParametersAssetType:
+    HttpsBusinessArtlistIoDownloadV1DownloadableAssetTypeIdFormatGetParametersFormat:
       type: string
       enum:
-      - song
-      title: HttpsBusinessArtlistIoDownloadV1DownloadableAssetTypeIdFormatGetParametersAssetType
+      - mp3
+      - wave
+      title: HttpsBusinessArtlistIoDownloadV1DownloadableAssetTypeIdFormatGetParametersFormat
     DownloadableUrl:
       type: object
       properties:
@@ -56,9 +57,8 @@ components:
       required:
       - url
       title: DownloadableUrl
-    HttpsBusinessArtlistIoDownloadV1DownloadableAssetTypeIdFormatGetParametersFormat:
+    HttpsBusinessArtlistIoDownloadV1DownloadableAssetTypeIdFormatGetParametersAssetType:
       type: string
       enum:
-      - mp3
-      - wave
-      title: HttpsBusinessArtlistIoDownloadV1DownloadableAssetTypeIdFormatGetParametersFormat
+      - song
+      title: HttpsBusinessArtlistIoDownloadV1DownloadableAssetTypeIdFormatGetParametersAssetType

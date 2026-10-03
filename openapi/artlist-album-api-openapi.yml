@@ -37,32 +37,6 @@ components:
       required:
       - album
       title: GetAlbumResponse
-    AlbumArtistDetails:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        slug:
-          type: string
-          description: Slug of the artist for URL
-      required:
-      - id
-      - name
-      - slug
-      title: AlbumArtistDetails
-    AlbumCollaborativeArtistDetails:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-      required:
-      - id
-      - name
-      title: AlbumCollaborativeArtistDetails
     Album:
       type: object
       properties:
@@ -101,3 +75,29 @@ components:
       - featuredArtists
       - primaryArtists
       title: Album
+    AlbumArtistDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+          description: Slug of the artist for URL
+      required:
+      - id
+      - name
+      - slug
+      title: AlbumArtistDetails
+    AlbumCollaborativeArtistDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - id
+      - name
+      title: AlbumCollaborativeArtistDetails
