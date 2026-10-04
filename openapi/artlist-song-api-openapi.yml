@@ -98,7 +98,7 @@ paths:
                 $ref: '#/components/schemas/GetSongsResponse'
 components:
   schemas:
-    SongArtistDetails:
+    SongAlbumDetails:
       type: object
       properties:
         id:
@@ -107,12 +107,23 @@ components:
           type: string
         slug:
           type: string
-          description: Slug of the artist for URL
+          description: Slug of the album for URL
       required:
       - id
       - name
       - slug
-      title: SongArtistDetails
+      title: SongAlbumDetails
+    SongGenreCategoryDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - id
+      - name
+      title: SongGenreCategoryDetails
     Song:
       type: object
       properties:
@@ -162,6 +173,21 @@ components:
       - bpmRate
       - genreCategories
       title: Song
+    SongArtistDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+          description: Slug of the artist for URL
+      required:
+      - id
+      - name
+      - slug
+      title: SongArtistDetails
     GetSongsResponse:
       type: object
       properties:
@@ -176,21 +202,6 @@ components:
       - songs
       - total
       title: GetSongsResponse
-    SongAlbumDetails:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        slug:
-          type: string
-          description: Slug of the album for URL
-      required:
-      - id
-      - name
-      - slug
-      title: SongAlbumDetails
     GetSongResponse:
       type: object
       properties:
@@ -199,14 +210,3 @@ components:
       required:
       - song
       title: GetSongResponse
-    SongGenreCategoryDetails:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-      required:
-      - id
-      - name
-      title: SongGenreCategoryDetails
