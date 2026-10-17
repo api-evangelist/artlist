@@ -113,6 +113,43 @@ components:
       - name
       - slug
       title: SongAlbumDetails
+    GetSongsResponse:
+      type: object
+      properties:
+        songs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Song'
+        total:
+          type: number
+          format: double
+      required:
+      - songs
+      - total
+      title: GetSongsResponse
+    SongArtistDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+          description: Slug of the artist for URL
+      required:
+      - id
+      - name
+      - slug
+      title: SongArtistDetails
+    GetSongResponse:
+      type: object
+      properties:
+        song:
+          $ref: '#/components/schemas/Song'
+      required:
+      - song
+      title: GetSongResponse
     SongGenreCategoryDetails:
       type: object
       properties:
@@ -173,40 +210,3 @@ components:
       - bpmRate
       - genreCategories
       title: Song
-    SongArtistDetails:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        slug:
-          type: string
-          description: Slug of the artist for URL
-      required:
-      - id
-      - name
-      - slug
-      title: SongArtistDetails
-    GetSongsResponse:
-      type: object
-      properties:
-        songs:
-          type: array
-          items:
-            $ref: '#/components/schemas/Song'
-        total:
-          type: number
-          format: double
-      required:
-      - songs
-      - total
-      title: GetSongsResponse
-    GetSongResponse:
-      type: object
-      properties:
-        song:
-          $ref: '#/components/schemas/Song'
-      required:
-      - song
-      title: GetSongResponse

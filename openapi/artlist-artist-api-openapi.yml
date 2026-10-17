@@ -29,6 +29,14 @@ paths:
                 $ref: '#/components/schemas/GetArtistResponse'
 components:
   schemas:
+    GetArtistResponse:
+      type: object
+      properties:
+        artist:
+          $ref: '#/components/schemas/Artist'
+      required:
+      - artist
+      title: GetArtistResponse
     Artist:
       type: object
       properties:
@@ -55,11 +63,3 @@ components:
       - bioImage
       - coverImage
       title: Artist
-    GetArtistResponse:
-      type: object
-      properties:
-        artist:
-          $ref: '#/components/schemas/Artist'
-      required:
-      - artist
-      title: GetArtistResponse

@@ -29,21 +29,17 @@ paths:
                 $ref: '#/components/schemas/GetAlbumResponse'
 components:
   schemas:
-    AlbumArtistDetails:
+    AlbumCollaborativeArtistDetails:
       type: object
       properties:
         id:
           type: string
         name:
           type: string
-        slug:
-          type: string
-          description: Slug of the artist for URL
       required:
       - id
       - name
-      - slug
-      title: AlbumArtistDetails
+      title: AlbumCollaborativeArtistDetails
     Album:
       type: object
       properties:
@@ -82,17 +78,21 @@ components:
       - featuredArtists
       - primaryArtists
       title: Album
-    AlbumCollaborativeArtistDetails:
+    AlbumArtistDetails:
       type: object
       properties:
         id:
           type: string
         name:
           type: string
+        slug:
+          type: string
+          description: Slug of the artist for URL
       required:
       - id
       - name
-      title: AlbumCollaborativeArtistDetails
+      - slug
+      title: AlbumArtistDetails
     GetAlbumResponse:
       type: object
       properties:
