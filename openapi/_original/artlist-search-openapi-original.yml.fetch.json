@@ -1,0 +1,12 @@
+{
+ "url": "https://developer.artlist.io/openapi/search.yaml",
+ "requested_url": "https://developer.artlist.io/openapi/search.yaml",
+ "status": 200,
+ "content_type": "application/x-yaml; charset=utf-8",
+ "bytes": 8693,
+ "sha256": "946910f670e90fea8b1b34e9ea2beebd667e3c321a68a928d5086328875b0b66",
+ "fetched_at": "2026-10-19",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
