@@ -210,3 +210,9 @@ components:
       - bpmRate
       - genreCategories
       title: Song
+x-provenance:
+  method: harvested
+  publisher: Artlist
+  source: https://developer.artlist.io/openapi/search.yaml
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
