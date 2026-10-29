@@ -64,50 +64,135 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Artlist is a creative-assets platform for video creators, marketers and brands, licensing
-royalty-free music, sound effects, stock footage, video templates, LUTs and editing plugins
-alongside a generative AI toolkit.
+Artlist is a creative-assets platform for video creators, marketers and brands, licensing royalty-free music, sound effects, stock footage, video templates, LUTs and editing plugins alongside a generative AI toolkit. The Artlist Enterprise API, published at developer.artlist.io, opens the company's music catalog to partner platforms: a Search API for songs, artists and albums with mood/genre/instrument category filters plus BPM, duration, vocal-type and free-text facets, and a Download API that mints signed MP3/WAV asset URLs for licensed assets. Access is OAuth 2.0 client-credentials against an Amazon Cognito authorization server with credentials issued by an account manager, and the developer portal publishes OpenAPI 3.1 definitions, an llms.txt index, an RFC 9727 /.well-known/api-catalog linkset and a hosted MCP server for documentation search.
 
-The **Artlist Enterprise API** at <https://developer.artlist.io/> opens the company's music
-catalog to partner platforms — a **Search API** for songs, artists and albums (mood, genre,
-instrument and video-theme category filters plus BPM, duration, vocal-type and free-text
-facets) and a **Download API** that mints signed mp3/wave delivery URLs for licensed assets.
+**Areas:** Company · Music · Audio · Media · Stock Media · Content Licensing · Creative Tools · Search · Generative AI · Video
 
-- Website — <https://artlist.io/>
-- Developer portal — <https://developer.artlist.io/>
-- API base URLs — `https://business.artlist.io/search/v1`, `https://business.artlist.io/download/v1`
-- Support — enterprise-api-support@artlist.io
+## Artlist on APIs.io
 
-## What is in this repo
+Everything profiled for Artlist is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/artlist/](https://apis.io/providers/artlist/)** — or go straight to one of the APIs or properties below.
 
-| Artifact | Notes |
+### APIs (5)
+
+- [Artlist Developer Docs MCP Server](https://apis.io/apis/artlist/docs-mcp/) — Hosted Model Context Protocol server for the Artlist Enterprise API documentation. Exposes a single anonymous read-only tool, searchDocs, that searches…
+- [Artlist Album API](https://apis.io/apis/artlist/artlist-album-api/) — The album API from Artlist — 1 operation(s) for album.
+- [Artlist Artist API](https://apis.io/apis/artlist/artlist-artist-api/) — The artist API from Artlist — 1 operation(s) for artist.
+- [Artlist Downloadable API](https://apis.io/apis/artlist/artlist-downloadable-api/) — The downloadable API from Artlist — 1 operation(s) for downloadable.
+- [Artlist Song API](https://apis.io/apis/artlist/artlist-song-api/) — The song API from Artlist — 2 operation(s) for song.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [artlist-developer-docs](https://apis.io/servers/artlist/artlist-developer-docs/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Artlist Agentic Access](https://apis.io/agentic-access/artlist/artlist-agentic-access/)
+
+#### Collections (4)
+
+Postman and Open Collection request collections.
+
+- [Search Album API](https://apis.io/collections/artlist/open-artlist-album-api/)
+- [Search Artist API](https://apis.io/collections/artlist/open-artlist-artist-api/)
+- [Download Downloadable API](https://apis.io/collections/artlist/open-artlist-downloadable-api/)
+- [Search Song API](https://apis.io/collections/artlist/open-artlist-song-api/)
+
+#### Overlays (2)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Artlist Download Overlay](https://apis.io/overlays/artlist/artlist-download-overlay/)
+- [Artlist Search Overlay](https://apis.io/overlays/artlist/artlist-search-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Artlist Authentication](https://apis.io/security/artlist/artlist-authentication/)
+- [Artlist Domain Security](https://apis.io/security/artlist/artlist-domain-security/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Artlist Rate Limits](https://apis.io/rate-limits/artlist/artlist-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://artlist.io/)
+- [Documentation](https://developer.artlist.io/welcome)
+- [Getting started](https://developer.artlist.io/welcome)
+- [API reference](https://developer.artlist.io/search/song/song-controller-get-songs)
+- [Pricing](https://artlist.io/pricing)
+- [Sign up](https://artlist.io/start-now)
+- [Support](https://help.artlist.io/hc/en-us)
+- [Blog](https://artlist.io/blog/)
+- [Compliance](https://help.artlist.io/hc/en-us/articles/29556821619101-Privacy-at-Artlist)
+- [Terms of service](https://artlist.io/help-center/privacy-terms/terms-of-use/)
+- [Privacy policy](https://artlist.io/help-center/privacy-terms/privacy-policy/)
+- [GitHub](https://github.com/Artlist-LTD)
+
+## API Evangelist rating
+
+**Kin Score 45.1** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
 |---|---|
-| `openapi/` | Two OpenAPI 3.1.0 documents harvested verbatim from `developer.artlist.io/openapi/{search,download}.yaml` |
-| `overlays/` | API Evangelist enhancements — real base URLs, the missing OAuth 2.0 securityScheme, parameter enums and bounds |
-| `mcp/` | The hosted docs MCP server (`/_mcp/server`, anonymous, one `searchDocs` tool) and the tool crosswalk |
-| `well-known/` | RFC 9727 `/.well-known/api-catalog` linkset, captured verbatim, plus the full probe index |
-| `llms/` | `llms.txt` fetched verbatim from the docs host |
-| `authentication/` | OAuth 2.0 client-credentials against an Amazon Cognito token endpoint |
-| `conventions/` | Pagination, filtering vocabulary, versioning, error envelope, rate-limit signaling |
-| `rate-limits/` | 100 req/min global, 50 on `/search`, 20 on `/download`, `X-RateLimit-*` headers |
-| `errors/` | The documented `{success, error{message, code, status}}` envelope and status table |
-| `conformance/` | OpenAPI 3.1, RFC 9727, OAuth 2.0, llms.txt and MCP conform; RFC 9457 and OIDC do not |
-| `lifecycle/` | URI-path v1; no changelog, status page, SLA or deprecation policy |
-| `data-model/` | Song / Artist / Album / GenreCategory entity graph derived from the specs |
-| `security/` | Probed TLS, HSTS, DNSSEC, CAA, SPF and DMARC posture |
-| `agentic-access/` | Recommended `x-agentic-access` contracts for all five operations |
-| `skills/` | Three packaged Agent Skills grounded in real operationIds |
-| `packages/` | Verified negative — no first-party SDK in any public registry |
+| Discoverability | 75.0 |
+| Contract quality | 39.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 34.2 |
+| Developer ergonomics | 63.7 |
+| Access clarity | 35.5 |
 
-## Notable findings
+**Agent readiness 34.8** — agent-ready
 
-- Artlist serves a real **RFC 9727 `/.well-known/api-catalog`** linkset pointing at both
-  OpenAPI documents — rare across the catalog.
-- Both published specs declare a placeholder `servers: [https://host.com]` while embedding
-  the absolute URL in each path key, and neither declares a `securityScheme` despite a fully
-  documented OAuth 2.0 flow. The overlays correct both without mutating the originals.
-- The MCP server is a **documentation** search server, not an API wrapper: zero overlap with
-  the five REST operations. See `mcp/artlist-tool-crosswalk.yml`.
-- No A2A agent card, no security.txt, no status page, no changelog, no sandbox, no CLI.
-- The docs carry leftover template text referring to "the Primer REST API" and a "Primer
-  account manager".
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | na |
+| MCP Server | platform (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | na |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | yes |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 27.3** — AI & Biometrics
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/artlist/](https://apis.io/providers/artlist/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Artlist: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/artlist/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
